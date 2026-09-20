@@ -14,19 +14,19 @@ plugins {
 fun templateProp(name: String, fallback: String): String =
   (project.findProperty(name) as String?)?.takeIf { it.isNotBlank() } ?: fallback
 
-val appName = templateProp("app.name", "GrixChat")
-val appId = templateProp("app.id", "com.gothwad.grixchat")
+val appName = templateProp("app.name", "Prepmate")
+val appId = templateProp("app.id", "com.gothwad.prepmate")
 val appVersionCode = templateProp("app.versionCode", "1").toIntOrNull() ?: 1
 val appVersionName = templateProp("app.versionName", "1.0.0")
-val jsBridgeName = templateProp("app.jsBridgeName", "GrixApp")
-val notificationChannelId = templateProp("app.notificationChannelId", "grix_chat_notifications")
+val jsBridgeName = templateProp("app.jsBridgeName", "PrepmateApp")
+val notificationChannelId = templateProp("app.notificationChannelId", "prepmate_chat_notifications")
 val notificationChannelName = templateProp("app.notificationChannelName", "App Notifications")
 val notificationChannelDescription =
   templateProp("app.notificationChannelDescription", "Messages and updates from the app")
 val prefsName = templateProp("app.prefsName", "app_prefs")
 
 android {
-  namespace = "com.gothwad.grixchat"
+  namespace = "com.gothwad.prepmate"
   compileSdk = 35
 
   defaultConfig {

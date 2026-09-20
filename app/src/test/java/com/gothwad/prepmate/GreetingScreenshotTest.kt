@@ -1,8 +1,8 @@
-package com.gothwad.grixchat
+package com.gothwad.prepmate
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
-import com.gothwad.grixchat.ui.theme.MyApplicationTheme
+import com.gothwad.prepmate.ui.theme.MyApplicationTheme
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule
@@ -23,7 +23,7 @@ class GreetingScreenshotTest {
 
   @Test
   fun greeting_screenshot() {
-    composeTestRule.setContent { MyApplicationTheme { Text("GrixChat") } }
+    composeTestRule.setContent { MyApplicationTheme { Text("Prepmate") } }
 
     composeTestRule.onRoot().captureRoboImage(filePath = "src/test/screenshots/greeting.png")
   }

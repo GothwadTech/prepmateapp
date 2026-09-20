@@ -1,4 +1,4 @@
-package com.gothwad.grixchat.data
+package com.gothwad.prepmate.data
 
 import android.content.Context
 import androidx.room.Database
@@ -10,19 +10,19 @@ import androidx.room.RoomDatabase
     version = 1,
     exportSchema = false
 )
-abstract class GrixDatabase : RoomDatabase() {
-    abstract fun grixDao(): GrixDao
+abstract class PrepmateDatabase : RoomDatabase() {
+    abstract fun prepmateDao(): PrepmateDao
 
     companion object {
         @Volatile
-        private var INSTANCE: GrixDatabase? = null
+        private var INSTANCE: PrepmateDatabase? = null
 
-        fun getDatabase(context: Context): GrixDatabase {
+        fun getDatabase(context: Context): PrepmateDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    GrixDatabase::class.java,
-                    "grixchat_database"
+                    PrepmateDatabase::class.java,
+                    "prepmate_database"
                 )
                 .fallbackToDestructiveMigration(dropAllTables = true)
                 .build()

@@ -1,9 +1,9 @@
-package com.gothwad.grixchat.utils
+package com.gothwad.prepmate.utils
 
 import android.util.Log
-import com.gothwad.grixchat.BuildConfig
-import com.gothwad.grixchat.data.GrixDatabase
-import com.gothwad.grixchat.data.GrixRepository
+import com.gothwad.prepmate.BuildConfig
+import com.gothwad.prepmate.data.PrepmateDatabase
+import com.gothwad.prepmate.data.PrepmateRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val tag = "GrixFCMService"
+    private val tag = "PrepmateFCMService"
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     /**
@@ -60,14 +60,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         saveNotificationToLocalDb(finalTitle, finalBody)
 
         // 3. Show native system notification banner
-        GrixNotificationHelper.showNotification(applicationContext, finalTitle, finalBody)
+        PrepmateNotificationHelper.showNotification(applicationContext, finalTitle, finalBody)
     }
 
     private fun saveNotificationToLocalDb(title: String, message: String) {
         serviceScope.launch {
             try {
-                val db = GrixDatabase.getDatabase(applicationContext)
-                val repository = GrixRepository(db.grixDao())
+                val db = PrepmateDatabase.getDatabase(applicationContext)
+                val repository = PrepmateRepository(db.prepmateDao())
                 repository.saveNotification(title, message)
             } catch (e: Exception) {
                 Log.e(tag, "Failed to persist notification in Room DB", e)

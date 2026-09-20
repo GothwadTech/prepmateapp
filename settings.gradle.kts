@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "GrixChat"
+rootProject.name = "Prepmate"
 
 include(":app")

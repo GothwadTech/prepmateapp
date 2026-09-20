@@ -6,80 +6,113 @@
     android:viewportHeight="200">
 
     <!-- 1. Center Curved Square (Squirclish Canvas) -->
-    <!-- Card filled with charcoal black, outlined subtly with primary/white opacity -->
+    <!-- Card filled with charcoal black, outlined subtly with brand blue -->
     <path
         android:fillColor="#1A1C1E"
         android:strokeColor="#1F88E5"
         android:strokeWidth="2"
         android:pathData="M 70 25 h 60 a 20 20 0 0 1 20 20 v 60 a 20 20 0 0 1 -20 20 h -60 a 20 20 0 0 1 -20 -20 v -60 a 20 20 0 0 1 20 -20 Z" />
 
-    <!-- 2. Chat Bubble Emblem (Vibrant Messenger Theme) -->
-    <path
-        android:fillColor="#1F88E5"
-        android:pathData="M 85,55 h 30 a 10,10 0 0 1 10,10 v 20 a 10,10 0 0 1 -10,10 h -15 l -10,10 v -10 h -5 a 10,10 0 0 1 -10,-10 v -20 a 10,10 0 0 1 10,-10 z" />
-
-    <!-- 3. Message Stripes Inside Chat Bubble -->
+    <!-- 2. Graduation Cap Emblem (Prepmate study theme) -->
+    <!-- Cap head (soft translucent white) -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M87,66h26v3.5h-26z M87,75h18v3.5h-18z" />
+        android:fillAlpha="0.93"
+        android:pathData="M 92.44,74.38 H 107.56 C 111.74,74.38 115.12,77.76 115.12,81.94 V 91.66 C 115.12,95.84 111.74,99.22 107.56,99.22 H 92.44 C 88.26,99.22 84.88,95.84 84.88,91.66 V 81.94 C 84.88,77.76 88.26,74.38 92.44,74.38 Z" />
 
-    <!-- 4. Dynamic Typography "GrixChat" at the lower half -->
+    <!-- Mortarboard -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 100,47.65 L 127,70.06 L 100,90.04 L 73,70.06 Z" />
+
+    <!-- Board button -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 102.97,69.52 a 2.97,2.97 0 1 0 -5.94,0 a 2.97,2.97 0 1 0 5.94,0 Z" />
+
+    <!-- Tassel arm + drop -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.89"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M 100,66.55 L 123.49,75.19 L 123.49,90.04" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 126.87,91.66 a 3.38,3.38 0 1 0 -6.76,0 a 3.38,3.38 0 1 0 6.76,0 Z" />
+
+    <!-- 3. Dynamic Typography "Prepmate" at the lower half -->
     <group>
-        <!-- 'G' - x=67 to 76 -->
-        <path
-            android:strokeColor="#FFFFFF"
-            android:strokeWidth="2.5"
-            android:strokeLineCap="round"
-            android:pathData="M 76,150 h -5 c -3,0 -5.5,2.5 -5.5,5.5 c 0,3 2.5,5.5 5.5,5.5 h 5 v -5.5 h -4" />
-
-        <!-- 'r' - x=80 to 85 -->
+        <!-- 'P' -->
         <path
             android:strokeColor="#FFFFFF"
             android:strokeWidth="2"
             android:strokeLineCap="round"
-            android:pathData="M 81,153 v 8 M 81,156 c 1,-1.5 2.5,-2.5 4,-2.5" />
+            android:strokeLineJoin="round"
+            android:fillColor="#00000000"
+            android:pathData="M 64,164 V 153 M 64,153 h 4.5 c 2.2,0 3.5,1.3 3.5,3 c 0,1.7 -1.3,3 -3.5,3 H 64" />
 
-        <!-- 'i' - x=88 to 90 -->
-        <path
-            android:strokeColor="#FFFFFF"
-            android:strokeWidth="2.2"
-            android:strokeLineCap="round"
-            android:pathData="M 89,149.5 v 0.5 M 89,153 v 8" />
-
-        <!-- 'x' - x=93 to 100 -->
+        <!-- 'r' -->
         <path
             android:strokeColor="#FFFFFF"
             android:strokeWidth="2"
             android:strokeLineCap="round"
-            android:pathData="M 94,153 l 5.5,8 M 99.5,153 l -5.5,8" />
+            android:fillColor="#00000000"
+            android:pathData="M 74.5,156 V 164 M 74.5,159 c 1,-1.5 2.5,-2.5 4,-2.5" />
 
-        <!-- 'C' - x=104 to 112 -->
-        <path
-            android:strokeColor="#FFFFFF"
-            android:strokeWidth="2.5"
-            android:strokeLineCap="round"
-            android:pathData="M 112,150 h -4.5 c -3,0 -5.5,2.5 -5.5,5.5 c 0,3 2.5,5.5 5.5,5.5 h 4.5" />
-
-        <!-- 'h' - x=115 to 122 -->
+        <!-- 'e' -->
         <path
             android:strokeColor="#FFFFFF"
             android:strokeWidth="2"
             android:strokeLineCap="round"
-            android:pathData="M 115,147 v 14 M 115,156 c 1,-1.5 2.5,-2.5 4,-2.5 c 1.5,0 2.5,1 2.5,2.5 v 6" />
+            android:strokeLineJoin="round"
+            android:fillColor="#00000000"
+            android:pathData="M 87.6,160 c 0,2.2 -1.4,4 -3.3,4 c -1.9,0 -3.3,-1.8 -3.3,-4 c 0,-2.2 1.4,-4 3.3,-4 c 1.7,0 3,1.5 3.3,3.5" />
 
-        <!-- 'a' - x=125 to 132 -->
+        <!-- 'p' -->
         <path
             android:strokeColor="#FFFFFF"
             android:strokeWidth="2"
             android:strokeLineCap="round"
-            android:pathData="M 131,157 c 0,2 -1.5,3.5 -3.5,3.5 c -2,0 -3,-1.5 -3,-3 c 0,-1.5 1.5,-2.5 3,-2.5 h 3.5 v 5.5" />
+            android:strokeLineJoin="round"
+            android:fillColor="#00000000"
+            android:pathData="M 90.3,156 V 166.5 M 90.3,156 h 4.3 c 2.2,0 3.4,1.6 3.4,4 c 0,2.4 -1.2,4 -3.4,4 h -4.3" />
 
-        <!-- 't' - x=135 to 140 -->
+        <!-- 'm' -->
         <path
             android:strokeColor="#FFFFFF"
             android:strokeWidth="2"
             android:strokeLineCap="round"
-            android:pathData="M 137,149 v 10 c 0,1 1,2 2,2 M 135,152 h 4.5" />
+            android:strokeLineJoin="round"
+            android:fillColor="#00000000"
+            android:pathData="M 100.3,156 V 164 M 100.3,159 c 0.8,-2.2 2,-3 3.4,-3 c 1.5,0 2.4,1 2.4,2.6 V 164 M 106.1,159 c 0.8,-2.2 2,-3 3.4,-3 c 1.5,0 2.4,1 2.4,2.6 V 164" />
+
+        <!-- 'a' -->
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="2"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:fillColor="#00000000"
+            android:pathData="M 120.4,159.5 c -0.4,-2.5 -1.5,-3.5 -3.2,-3.5 c -1.9,0 -3.2,1.7 -3.2,4 c 0,2.3 1.3,4 3.2,4 c 1.7,0 2.8,-1 3.2,-3.5 M 120.4,156 V 164" />
+
+        <!-- 't' -->
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="2"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:fillColor="#00000000"
+            android:pathData="M 124.4,153.5 V 161.5 c 0,1.6 0.9,2.5 2.4,2.5 M 122.4,156.5 h 4.6" />
+
+        <!-- 'e' -->
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="2"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:fillColor="#00000000"
+            android:pathData="M 135.4,160 c 0,2.2 -1.4,4 -3.3,4 c -1.9,0 -3.3,-1.8 -3.3,-4 c 0,-2.2 1.4,-4 3.3,-4 c 1.7,0 3,1.5 3.3,3.5 M 128.8,160 h 6.6" />
     </group>
 
 </vector>

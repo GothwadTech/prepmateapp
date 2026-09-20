@@ -1,4 +1,4 @@
-package com.gothwad.grixchat.utils
+package com.gothwad.prepmate.utils
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -11,14 +11,14 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.gothwad.grixchat.MainActivity
+import com.gothwad.prepmate.MainActivity
 
-object GrixNotificationHelper {
+object PrepmateNotificationHelper {
     // Values come from gradle.properties (app.notificationChannel*) via BuildConfig,
     // so a rebrand does not have to touch this file.
-    private val CHANNEL_ID = com.gothwad.grixchat.BuildConfig.NOTIFICATION_CHANNEL_ID
-    private val CHANNEL_NAME = com.gothwad.grixchat.BuildConfig.NOTIFICATION_CHANNEL_NAME
-    private val CHANNEL_DESC = com.gothwad.grixchat.BuildConfig.NOTIFICATION_CHANNEL_DESCRIPTION
+    private val CHANNEL_ID = com.gothwad.prepmate.BuildConfig.NOTIFICATION_CHANNEL_ID
+    private val CHANNEL_NAME = com.gothwad.prepmate.BuildConfig.NOTIFICATION_CHANNEL_NAME
+    private val CHANNEL_DESC = com.gothwad.prepmate.BuildConfig.NOTIFICATION_CHANNEL_DESCRIPTION
     private const val NOTIFICATION_ID = 1001
 
     fun createNotificationChannel(context: Context) {
