@@ -13,33 +13,27 @@
         android:strokeWidth="2"
         android:pathData="M 70 25 h 60 a 20 20 0 0 1 20 20 v 60 a 20 20 0 0 1 -20 20 h -60 a 20 20 0 0 1 -20 -20 v -60 a 20 20 0 0 1 20 -20 Z" />
 
-    <!-- 2. Graduation Cap Emblem (Prepmate study theme) -->
-    <!-- Cap head (soft translucent white) -->
+    <!-- 2. Crown Emblem (Prepmate brand mark, matches the launcher icon) -->
+    <!-- Crown tips -->
     <path
         android:fillColor="#FFFFFF"
-        android:fillAlpha="0.93"
-        android:pathData="M 92.44,74.38 H 107.56 C 111.74,74.38 115.12,77.76 115.12,81.94 V 91.66 C 115.12,95.84 111.74,99.22 107.56,99.22 H 92.44 C 88.26,99.22 84.88,95.84 84.88,91.66 V 81.94 C 84.88,77.76 88.26,74.38 92.44,74.38 Z" />
+        android:pathData="M78.8,65.6 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M100,56 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M121.2,65.6 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
 
-    <!-- Mortarboard -->
+    <!-- Crown body -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M 100,47.65 L 127,70.06 L 100,90.04 L 73,70.06 Z" />
+        android:pathData="M80.8,67.3 L90.1,70.2 L100,59.5 L110,70.2 L119.3,67.3 L117.3,88.9 L82.7,88.9 Z" />
 
-    <!-- Board button -->
+    <!-- Base bar -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M 102.97,69.52 a 2.97,2.97 0 1 0 -5.94,0 a 2.97,2.97 0 1 0 5.94,0 Z" />
-
-    <!-- Tassel arm + drop -->
-    <path
-        android:strokeColor="#FFFFFF"
-        android:strokeWidth="1.89"
-        android:strokeLineCap="round"
-        android:fillColor="#00000000"
-        android:pathData="M 100,66.55 L 123.49,75.19 L 123.49,90.04" />
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M 126.87,91.66 a 3.38,3.38 0 1 0 -6.76,0 a 3.38,3.38 0 1 0 6.76,0 Z" />
+        android:pathData="M82.4,93.1 h35.2 v4.9 h-35.2 Z" />
 
     <!-- 3. Dynamic Typography "Prepmate" at the lower half -->
     <group>
@@ -101,7 +95,6 @@
             android:strokeColor="#FFFFFF"
             android:strokeWidth="2"
             android:strokeLineCap="round"
-            android:strokeLineJoin="round"
             android:fillColor="#00000000"
             android:pathData="M 124.4,153.5 V 161.5 c 0,1.6 0.9,2.5 2.4,2.5 M 122.4,156.5 h 4.6" />
 

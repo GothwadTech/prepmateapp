@@ -52,7 +52,7 @@ object PrepmateNotificationHelper {
         )
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification) // Prepmate graduation-cap glyph
+            .setSmallIcon(R.drawable.ic_notification) // Prepmate crown brand mark
             .setContentTitle(title)
             .setContentText(message)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))
