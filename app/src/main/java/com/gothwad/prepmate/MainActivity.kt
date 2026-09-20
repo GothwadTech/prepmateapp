@@ -48,12 +48,12 @@ import com.gothwad.prepmate.data.PrepmateRepository
 import com.gothwad.prepmate.ui.PrepmateViewModel
 import com.gothwad.prepmate.ui.PrepmateViewModelFactory
 import com.gothwad.prepmate.ui.PrepmateJavascriptInterface
-import com.gothwad.prepmate.ui.theme.MyApplicationTheme
+import com.gothwad.prepmate.ui.theme.PrepmateTheme
 import com.gothwad.prepmate.utils.PrepmateNotificationHelper
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_MyApplication)
+        setTheme(R.style.Theme_Prepmate)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
@@ -125,7 +125,7 @@ class MainActivity : ComponentActivity() {
             val systemIsDark = isSystemInDarkTheme()
             val useDarkTheme = isDarkThemeOverride ?: systemIsDark
 
-            MyApplicationTheme(darkTheme = useDarkTheme) {
+            PrepmateTheme(darkTheme = useDarkTheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -147,7 +147,7 @@ fun PrepmateScreen(viewModel: PrepmateViewModel, isDarkTheme: Boolean) {
 
     var webViewInstance by remember { mutableStateOf<WebView?>(null) }
 
-    // Names the web app and the container share; both are template configuration.
+    // Bridge name shared by the Prepmate web app and this container (app.jsBridgeName in gradle.properties).
     val jsBridgeName = BuildConfig.JS_BRIDGE_NAME
 
     // Passed into the AndroidView factory as a plain callback (state writes stay out of the factory)

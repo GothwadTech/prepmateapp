@@ -29,7 +29,7 @@ class PrepmateViewModel(
     private val connectivityManager =
         application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    // Target web resource loaded dynamically from environment configuration
+    // Prepmate web app URL, injected from .env (TARGET_URL) at build time
     val targetUrl = com.gothwad.prepmate.BuildConfig.TARGET_URL
 
     // Only this host (plus its subdomains) may use camera, microphone and geolocation.
@@ -49,12 +49,6 @@ class PrepmateViewModel(
 
     private val _isDarkThemeOverride = MutableStateFlow<Boolean?>(null)
     val isDarkThemeOverride: StateFlow<Boolean?> = _isDarkThemeOverride.asStateFlow()
-
-    private val _showSettingsDialog = MutableStateFlow(false)
-    val showSettingsDialog: StateFlow<Boolean> = _showSettingsDialog.asStateFlow()
-
-    private val _showNotificationsTray = MutableStateFlow(false)
-    val showNotificationsTray: StateFlow<Boolean> = _showNotificationsTray.asStateFlow()
 
     // Persistent items from database
     val offlineDrafts: StateFlow<List<OfflineDraft>> = repository.allOfflineDrafts
@@ -123,7 +117,7 @@ class PrepmateViewModel(
     }
 
     /**
-     * True when [origin] belongs to the app's own web app. Used to gate WebView-level
+     * True when [origin] belongs to the Prepmate web app. Used to gate WebView-level
      * permission grants so a third-party page can never silently get the camera or mic.
      */
     fun isTrustedOrigin(origin: String): Boolean {
@@ -139,14 +133,6 @@ class PrepmateViewModel(
 
     fun setDarkThemeOverride(isDark: Boolean?) {
         _isDarkThemeOverride.value = isDark
-    }
-
-    fun setShowSettings(show: Boolean) {
-        _showSettingsDialog.value = show
-    }
-
-    fun setShowNotificationsTray(show: Boolean) {
-        _showNotificationsTray.value = show
     }
 
     // DB Operations

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Premium brand blue background -->
+    <!-- Prepmate brand blue background -->
     <item>
-        <color android:color="#0494f4" />
+        <color android:color="@color/prepmate_blue" />
     </item>
 
-    <!-- Centered Prepmate Curved-Logo and Typography vector -->
+    <!-- Centered Prepmate logo + wordmark vector -->
     <item
         android:drawable="@drawable/ic_splash_logo"
         android:gravity="center" />

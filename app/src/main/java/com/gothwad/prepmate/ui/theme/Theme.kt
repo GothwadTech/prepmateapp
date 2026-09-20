@@ -42,7 +42,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun MyApplicationTheme(
+fun PrepmateTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Allow dynamic colors on API 31+
     dynamicColor: Boolean = false,
