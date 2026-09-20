@@ -11,20 +11,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+/**
+ * Receives Firebase Cloud Messaging pushes for Prepmate and surfaces them as
+ * native notifications (plus a local Room log the app can show later).
+ */
+class PrepmateFirebaseMessagingService : FirebaseMessagingService() {
 
     private val tag = "PrepmateFCMService"
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     /**
      * Called when a new FCM token is generated or refreshed.
-     * This token must be saved to Supabase (via the WebApp client or an direct endpoint)
+     * The Prepmate web app reads it through window.PrepmateApp.getPushToken() and
+     * registers it with the Prepmate backend.
      */
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(tag, "Refreshed FCM Token: $token")
-        
-        // Save the token locally so Javascript can fetch it via window.<app.jsBridgeName>.getPushToken()
+
+        // Cache the token locally so the JS bridge can hand it to the web app
         val sharedPrefs = getSharedPreferences(BuildConfig.PREFS_NAME, MODE_PRIVATE)
         sharedPrefs.edit().putString("fcm_token", token).apply()
     }
@@ -36,11 +41,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         Log.d(tag, "From: ${remoteMessage.from}")
 
-        // 1. Extract Title and Message Body from Notification payload or Data payload
+        // 1. Extract title and body from the notification payload or the data payload
         var title = remoteMessage.notification?.title
         var body = remoteMessage.notification?.body
 
-        // Supabase Edge Functions typically send a "data" payload to have maximum control over notifications
+        // Data-only pushes (sent by the Prepmate backend for full control over rendering)
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(tag, "Message data payload: ${remoteMessage.data}")
             if (title.isNullOrEmpty()) {
@@ -51,15 +56,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        val finalTitle = title ?: "${BuildConfig.APP_NAME} Message"
-        val finalBody = body ?: "You have received a new message."
+        val finalTitle = title ?: BuildConfig.APP_NAME
+        val finalBody = body ?: "You have a new update from ${BuildConfig.APP_NAME}."
 
         Log.d(tag, "Displaying notification: Title=$finalTitle, Body=$finalBody")
 
-        // 2. Persist the notification in the local room database so user can see logs inside the app history
+        // 2. Persist the notification in the local Room database (in-app notification history)
         saveNotificationToLocalDb(finalTitle, finalBody)
 
-        // 3. Show native system notification banner
+        // 3. Show the native system notification
         PrepmateNotificationHelper.showNotification(applicationContext, finalTitle, finalBody)
     }
 

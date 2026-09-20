@@ -1,17 +1,19 @@
-# WebView App Builder🚀
+# Prepmate 🎓
 
 <div align="center">
 
+<img src="app/src/main/assets/icon_512.png" alt="Prepmate logo" width="128" />
+
 ![Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
-![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-BOM-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
-![Architecture](https://img.shields.io/badge/Architecture-MVVM%20%2B%20Clean-FF6F00?style=for-the-badge)
-![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge)
+![Kotlin](https://img.shields.io/badge/Kotlin-2.2-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
+![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
+![Architecture](https://img.shields.io/badge/Architecture-MVVM-FF6F00?style=for-the-badge)
 
-**A reusable, offline-first Android WebView container built with Jetpack Compose, Material 3,
-Room Database, and Firebase Cloud Messaging — rebrand it from one config block.**
+**The official Prepmate Android app** — a native Jetpack Compose shell around the Prepmate web app
+(`gtwdmate.pages.dev`) with offline caching, scoped device permissions, a Room database and
+Firebase Cloud Messaging push notifications.
 
-[Template Usage](#-using-this-as-a-template) • [Features](#-key-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [CI/CD & Releases](#-cicd--signing-secrets)
+[Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Configuration](#-configuration) • [Push Notifications](#-push-notifications-fcm) • [CI/CD & Releases](#-cicd--signing-secrets)
 
 </div>
 
@@ -19,27 +21,26 @@ Room Database, and Firebase Cloud Messaging — rebrand it from one config block
 
 ## 📱 Overview
 
-**A template for shipping a web app as a native Android app.** Point it at a URL and you get a
-production-shaped container: native Compose chrome around a hardened WebView, offline caching
-and a retryable offline screen, scoped camera/mic/geolocation, a Room database for local data,
-and FCM push wired to a JavaScript bridge.
+Prepmate for Android loads the Prepmate web app inside a hardened WebView and adds the native
+pieces a web app cannot provide on its own:
 
-The repository currently carries a working sample configuration — **Prepmate**
-(`gtwdmate.pages.dev`) — so the template stays verifiable against a live deployment.
-That is *sample data*, not the product: see **[Using this as a template](#-using-this-as-a-template)**
-to rebrand the app from `gradle.properties` + `.env`.
+- a branded splash screen and Material 3 chrome that follows the web app's light/dark theme,
+- offline-first loading with a retryable offline screen,
+- camera / microphone / geolocation access scoped to the Prepmate origin only,
+- a local Room database for offline drafts and a notification history,
+- FCM push notifications and a `window.PrepmateApp` JavaScript bridge the web app can call.
 
 ---
 
-## ✨ Key Features
+## ✨ Features
 
-- 🎨 **Material 3 & Edge-to-Edge**: Modern UI design following the latest Material Design 3 guidelines, dynamic theming with dark mode support, and seamless edge-to-edge drawing.
-- ⚡ **Offline-First Reliability**: Integrated Room Database along with WebView ServiceWorker caching ensuring fast load times and uninterrupted offline experience.
-- 🔔 **Push Notifications**: Firebase Cloud Messaging (FCM) plumbing with a configurable notification channel and a JavaScript bridge the web app can call — activate it by adding `google-services.json` (see below).
-- 🔄 **Modern State Management**: MVVM architecture utilizing Kotlin Coroutines, `StateFlow`, and `collectAsStateWithLifecycle`.
-- 🧩 **Config-Driven Rebranding**: App name, application ID, version, JS bridge name, notification channel and target URL all come from `gradle.properties` / `.env`.
-- 🔒 **Scoped Permissions**: camera, microphone and geolocation are granted only to the configured origin, requested lazily when the page needs them.
-- 🛡️ **Automated CI/CD Workflows**: GitHub Actions build a signed Release APK, Debug APK and Play Store AAB on every push, publish GitHub Releases on tags, and run a build check on pull requests with strict secret validation.
+- 🎨 **Material 3 & Edge-to-Edge**: Compose UI with dynamic light/dark theming that mirrors the web app's theme (class / `data-theme` observer with a luma fallback).
+- ⚡ **Offline-First**: `LOAD_CACHE_ELSE_NETWORK` + ServiceWorker caching when offline, and an offline panel that overlays a still-mounted WebView so page state survives a network blip.
+- 🔔 **Push Notifications**: Firebase Cloud Messaging with a dedicated `Prepmate Notifications` channel and a Prepmate notification icon — see [setup](#-push-notifications-fcm).
+- 🧩 **JavaScript Bridge**: `window.PrepmateApp.postNotification()`, `.getPushToken()`, `.isDeviceOnline()`, `.saveOfflineDraft()`, `.showToast()`, `.setTheme()`.
+- 🔒 **Scoped Permissions**: camera, microphone and geolocation are granted only to the Prepmate origin and requested lazily when the page needs them — no permission spam on first launch.
+- 🔄 **MVVM State**: Kotlin Coroutines, `StateFlow` and `collectAsStateWithLifecycle`.
+- 🛡️ **Automated CI/CD**: GitHub Actions build a signed Release APK, Debug APK and Play Store AAB on every push to `main`, and publish GitHub Releases on `v*` tags.
 
 ---
 
@@ -48,46 +49,47 @@ to rebrand the app from `gradle.properties` + `.env`.
 | Layer | Technologies |
 | :--- | :--- |
 | **Language** | Kotlin 2.x |
-| **UI Framework** | Jetpack Compose (BOM), Material 3, Accompanist |
-| **Architecture** | MVVM (Model-View-ViewModel) + Repository Pattern |
-| **Local Storage** | Room Database + SQLite, Android Keystore |
-| **Networking & API**| Retrofit, OkHttp 4, Moshi (Kotlin codegen) |
-| **Push Notifications** | Firebase Cloud Messaging (FCM) |
-| **Build System** | Gradle 9.3.1 (Kotlin DSL), Android Gradle Plugin (AGP) |
-| **Testing** | Robolectric, Roborazzi, JUnit 4, AndroidX Test |
+| **UI** | Jetpack Compose (BOM), Material 3 |
+| **Architecture** | MVVM + Repository pattern |
+| **Local Storage** | Room Database (SQLite), SharedPreferences |
+| **Networking** | Retrofit, OkHttp 4, Moshi (Kotlin codegen) |
+| **Push** | Firebase Cloud Messaging (FCM) |
+| **Build** | Gradle 9 (Kotlin DSL), Android Gradle Plugin 9 |
+| **Testing** | JUnit 4, Robolectric, Roborazzi, AndroidX Test |
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-webview/                        # template root
+prepmateapp/
 ├── .github/
 │   └── workflows/
-│       ├── build.yml          # Build & Sign APK / AAB on push to main
-│       ├── release.yml        # Build & Publish to GitHub Releases on tag (v*)
-│       └── ci.yml             # Build check on pull requests
+│       ├── build.yml          # Build & sign APK / AAB on push to main (auto GitHub Release)
+│       └── release.yml        # Build & publish to GitHub Releases on tag (v*)
 ├── app/
 │   ├── src/
 │   │   ├── main/
-│   │   │   ├── assets/        # App assets & graphics
+│   │   │   ├── assets/                       # icon_512.png (store / marketing icon)
 │   │   │   ├── java/com/gothwad/prepmate/
-│   │   │   │   ├── data/      # Room Database, DAO, Repository
-│   │   │   │   ├── ui/        # Compose Screens, ViewModels, Theme
-│   │   │   │   └── utils/     # FCM Service, Notification Helpers
-│   │   │   ├── res/           # Layouts, mipmaps, drawables, strings
+│   │   │   │   ├── MainActivity.kt           # WebView screen, permissions, offline panel
+│   │   │   │   ├── data/                     # PrepmateDatabase, PrepmateDao, PrepmateRepository
+│   │   │   │   ├── ui/                       # PrepmateViewModel, PrepmateJavascriptInterface, theme/
+│   │   │   │   └── utils/                    # PrepmateFirebaseMessagingService, PrepmateNotificationHelper
+│   │   │   ├── res/                          # Launcher icons, splash, themes, notification icon
 │   │   │   └── AndroidManifest.xml
-│   │   └── test/              # Local JVM and Robolectric unit tests
-│   ├── build.gradle.kts       # App module configuration & dependencies
-│   └── proguard-rules.pro     # ProGuard / R8 rules
+│   │   ├── test/                             # JVM + Robolectric tests
+│   │   └── androidTest/                      # Instrumented tests
+│   ├── build.gradle.kts                      # App module configuration & dependencies
+│   └── proguard-rules.pro
 ├── gradle/
-│   ├── libs.versions.toml     # Version catalog
-│   └── wrapper/               # Gradle wrapper executable & properties
-├── gradle.properties          # ⭐ Template configuration (app.name, app.id, JS bridge, ...)
-├── .env.example               # ⭐ TARGET_URL for the web app (copy to .env)
-├── build.gradle.kts           # Root build configuration
-├── settings.gradle.kts        # Project settings & plugin resolution
-└── README.md                  # Documentation
+│   ├── libs.versions.toml                    # Version catalog
+│   └── wrapper/                              # Gradle wrapper
+├── gradle.properties                         # ⭐ Prepmate app configuration (app.* block)
+├── .env.example                              # ⭐ TARGET_URL of the Prepmate web app (copy to .env)
+├── build.gradle.kts
+├── settings.gradle.kts
+└── README.md
 ```
 
 ---
@@ -96,19 +98,19 @@ webview/                        # template root
 
 ### Prerequisites
 
-- **Android Studio**: Ladybug (2024.2.1+) or newer recommended.
-- **JDK**: Java 17 or Java 21 (Temurin / Eclipse Adoptium recommended).
-- **Android SDK**: API Level 35 (compileSdk & targetSdk), Minimum API Level 23.
+- **Android Studio**: Ladybug (2024.2.1+) or newer.
+- **JDK**: Java 17 (Temurin recommended).
+- **Android SDK**: API 35 (compileSdk & targetSdk), minimum API 23.
 
-### Local Installation & Build
+### Build locally
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/Prepmate.git
-   cd Prepmate
+   git clone https://github.com/GothwadTech/prepmateapp.git
+   cd prepmateapp
    ```
 
-2. **Setup environment variables:**
+2. **Create the environment file:**
    ```bash
    cp .env.example .env
    ```
@@ -118,77 +120,47 @@ webview/                        # template root
    chmod +x ./gradlew
    ./gradlew assembleDebug
    ```
-   The debug APK will be generated at:
-   `app/build/outputs/apk/debug/app-debug.apk`
+   Output: `app/build/outputs/apk/debug/app-debug.apk`
 
-4. **Run Unit Tests:**
+4. **Run unit tests:**
    ```bash
    ./gradlew testDebugUnitTest
    ```
 
 ---
 
-## 🧩 Using this as a template
+## ⚙️ Configuration
 
-This repository is a **reusable WebView container** at heart. The current values
-(`Prepmate`, `gtwdmate.pages.dev`) are the live configuration for the Prepmate app.
-To ship a different app, change only the config block — nothing else in the project
-hardcodes the branding.
+All app identity lives in one place so nothing is hardcoded in the Kotlin sources.
 
-### 1. The config block (`gradle.properties`)
+### `gradle.properties` — the `app.*` block
 
-| Key | What it controls |
-| :--- | :--- |
-| `app.name` | Launcher label, notification fallback title, JS bridge fallback token, CI artifact names |
-| `app.id` | `applicationId` (Play Store / package identity) |
-| `app.versionCode` / `app.versionName` | Local build version — CI overrides these with `-PversionCode` / `-PversionName` and auto-increments per release |
-| `app.jsBridgeName` | The injected bridge name; the web app calls `window.<name>.postNotification(...)`, `.getPushToken()`, `.isDeviceOnline()`, `.saveOfflineDraft()`, `.showToast()`, `.setTheme()` |
-| `app.notificationChannelId` / `Name` / `Description` | Android notification channel |
-| `app.prefsName` | SharedPreferences file that caches the FCM token |
+| Key | Value | Used for |
+| :--- | :--- | :--- |
+| `app.name` | `Prepmate` | Launcher label, notification fallback title, CI artifact names |
+| `app.id` | `com.gothwad.prepmate` | `applicationId` (Play Store identity) |
+| `app.versionCode` / `app.versionName` | `1` / `1.0.0` | Local builds only — CI passes `-PversionCode` / `-PversionName` |
+| `app.jsBridgeName` | `PrepmateApp` | Name of the injected JS bridge (`window.PrepmateApp`) |
+| `app.notificationChannelId` / `Name` / `Description` | `prepmate_notifications` … | Android notification channel |
+| `app.prefsName` | `prepmate_prefs` | SharedPreferences file that caches the FCM token |
 
-### 2. The web target (`.env`)
+### `.env` — the web target
 
 ```bash
-cp .env.example .env     # then set TARGET_URL to your web app
+TARGET_URL=https://gtwdmate.pages.dev
 ```
 
-`TARGET_URL` is the **only** allowed origin: camera, microphone and geolocation requests from
-any other origin are denied, and it drives the WebView's initial load. Change it and the
-session/theme/caching behaviour follows automatically.
-
-### 3. Rebrand checklist for a new app
-
-1. Edit the `app.*` block in `gradle.properties`.
-2. Set `TARGET_URL` in `.env`.
-3. Replace the launcher icons in `app/src/main/res/mipmap-*` and `ic_splash_logo.xml`.
-4. *(Optional)* Rename the Kotlin package/classes (`com.gothwad.prepmate.*`, `Prepmate*` classes,
-   the `prepmate_database` Room file). These are **not** part of the config block — they are
-   internal identifiers, so they only matter if you want the source tree to look neutral.
-5. Add `google-services.json` + the `google-services` plugin if the app needs push (see below).
-
-> **`app.id` vs package name:** changing `applicationId` is enough for a new store listing —
-> the Kotlin `namespace` stays `com.gothwad.prepmate` and the code keeps working. Rename the
-> source package only if you care about the source layout.
-
-### 4. What the template already handles
-
-- Offline-first: `LOAD_CACHE_ELSE_NETWORK` + ServiceWorker cache when the device is offline, a
-  retryable offline panel over a still-mounted WebView (page state survives a network blip).
-- Permission scoping: camera/mic/geolocation only for `TARGET_URL`'s origin, asked lazily when
-  the page needs them; no permission spam on first launch.
-- HTML ↔ native theme sync (MutationObserver + luma fallback), dark/light, edge-to-edge insets.
-- Room database for offline drafts + a notification log.
-- FCM service + notification channel + `PrepmateApp`-style JS bridge.
+`TARGET_URL` is the page the WebView loads **and** the only origin allowed to use the camera,
+microphone and geolocation. `.env` is git-ignored; CI copies `.env.example` to `.env` automatically.
 
 ---
 
-## 🔔 Push Notifications (FCM) — setup required
+## 🔔 Push Notifications (FCM)
 
-The app ships with FCM code, but **push notifications stay disabled until Firebase is wired up**.
-Both of these are required:
+The FCM code ships in the app, but **push stays disabled until Firebase is wired up**:
 
 1. Add your `google-services.json` to the `app/` directory.
-2. Apply the Google Services plugin — uncomment in `app/build.gradle.kts`:
+2. Apply the Google Services plugin in `app/build.gradle.kts`:
    ```kotlin
    plugins {
      // ...
@@ -196,77 +168,73 @@ Both of these are required:
    }
    ```
 
-Without them, `FirebaseApp.getApps()` is empty, the app logs
-`Firebase is not configured ... Push notifications are DISABLED.`, and
+Without them the app logs `Firebase is not configured ... Push notifications are DISABLED.` and
 `window.PrepmateApp.getPushToken()` returns a locally generated placeholder token.
-(Previously the app silently initialised Firebase with a fake API key, so token
-retrieval failed forever while every piece of the notification stack *looked* connected.)
 
 ---
 
 ## 🔐 CI/CD & Signing Secrets
 
-The repository includes pre-configured GitHub Actions workflows for continuous integration and automated release deployments.
+Two GitHub Actions workflows are included:
+
+| Workflow | Trigger | What it does |
+| :--- | :--- | :--- |
+| `Prepmate - Build Signed APK & Play Store AAB` | push to `main` / manual | Builds, signs and uploads `Prepmate-v<version>-Release.apk`, `-Debug.apk`, `-PlayStore.aab` and creates a GitHub Release |
+| `Prepmate - Release to GitHub Releases` | tag `v*` / manual | Same artifacts, published under the tag |
 
 ### Required GitHub Secrets
 
-To build and sign Release APKs & Play Store AAB bundles automatically, add the following secrets to your GitHub repository under **Settings > Secrets and variables > Actions**:
+Add these under **Settings > Secrets and variables > Actions**:
 
 | Secret Name | Description | Required |
 | :--- | :--- | :---: |
-| `RELEASE_KEYSTORE_BASE64` | Base64-encoded release `.jks` or `.keystore` file | **Yes** |
-| `KEYSTORE_PASSWORD` | Password for your release keystore | **Yes** |
-| `KEY_ALIAS` | Key alias name inside the keystore | Optional |
-| `KEY_PASSWORD` | Password for the key alias | Optional |
+| `RELEASE_KEYSTORE_BASE64` | Base64-encoded release `.jks` / `.keystore` | **Yes** |
+| `KEYSTORE_PASSWORD` | Password of the release keystore | **Yes** |
+| `KEY_ALIAS` | Key alias inside the keystore (auto-detected if omitted) | Optional |
+| `KEY_PASSWORD` | Password of the key alias (defaults to `KEYSTORE_PASSWORD`) | Optional |
 
-> **Note**: For security, if `RELEASE_KEYSTORE_BASE64` or `KEYSTORE_PASSWORD` is not configured, the release build step will automatically abort to prevent deploying unverified or improperly signed builds.
+> If `RELEASE_KEYSTORE_BASE64` or `KEYSTORE_PASSWORD` is missing, the workflow aborts before building
+> so an unsigned or wrongly signed build is never published.
 
 ### Generating `RELEASE_KEYSTORE_BASE64`
 
-You can convert your local `.jks` or `.keystore` file into Base64 using:
-
 **Linux / macOS:**
 ```bash
-base64 -i my-release-key.jks | tr -d '\n' > keystore_base64.txt
+base64 -i prepmate-release-key.jks | tr -d '\n' > keystore_base64.txt
 ```
 
 **Windows (PowerShell):**
 ```powershell
-[Convert]::ToBase64String([IO.File]::ReadAllBytes("my-release-key.jks")) | Set-Content keystore_base64.txt
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("prepmate-release-key.jks")) | Set-Content keystore_base64.txt
 ```
-Copy the contents of `keystore_base64.txt` and paste it into GitHub Secrets as `RELEASE_KEYSTORE_BASE64`.
+
+Paste the contents of `keystore_base64.txt` into the `RELEASE_KEYSTORE_BASE64` secret.
 
 ---
 
 ## 🏷️ Triggering a Release
 
-To trigger an official GitHub Release:
+```bash
+git tag v1.0.3
+git push origin v1.0.3
+```
 
-1. Create a version tag locally:
-   ```bash
-   git tag v1.0.0
-   git push origin v1.0.0
-   ```
-2. The `Release to GitHub Releases` workflow will automatically:
-   - Validate signing secrets.
-   - Self-heal Gradle wrapper if needed.
-   - Build signed Release APK, Debug APK, and Play Store AAB.
-   - Publish a new GitHub Release with generated release notes and downloadable assets.
+The release workflow validates the signing secrets, builds the signed Release APK, Debug APK and
+Play Store AAB, and publishes **Prepmate v1.0.3** on GitHub Releases with generated release notes.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Create a feature branch (`git checkout -b feature/my-change`)
+2. Commit your changes (`git commit -m 'Describe the change'`)
+3. Push the branch (`git push origin feature/my-change`)
+4. Open a Pull Request against `main`
 
 ---
 
-## 📄 License
+<div align="center">
 
-Distributed under the Apache License 2.0. See `LICENSE` for more information.
+Made with ❤️ by **Gothwad Tech** for Prepmate learners.
+
+</div>

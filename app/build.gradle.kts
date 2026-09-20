@@ -7,23 +7,23 @@ plugins {
 }
 
 // ---------------------------------------------------------------------------
-// Template configuration — every app.* value comes from gradle.properties, so a
-// new app is rebranded from that one block instead of hunting strings in code.
+// Prepmate configuration — every app.* value comes from gradle.properties, so
+// the app identity lives in one block instead of being scattered through code.
 // TARGET_URL comes from .env via the secrets plugin (see .env.example).
 // ---------------------------------------------------------------------------
-fun templateProp(name: String, fallback: String): String =
+fun prepmateProp(name: String, fallback: String): String =
   (project.findProperty(name) as String?)?.takeIf { it.isNotBlank() } ?: fallback
 
-val appName = templateProp("app.name", "Prepmate")
-val appId = templateProp("app.id", "com.gothwad.prepmate")
-val appVersionCode = templateProp("app.versionCode", "1").toIntOrNull() ?: 1
-val appVersionName = templateProp("app.versionName", "1.0.0")
-val jsBridgeName = templateProp("app.jsBridgeName", "PrepmateApp")
-val notificationChannelId = templateProp("app.notificationChannelId", "prepmate_chat_notifications")
-val notificationChannelName = templateProp("app.notificationChannelName", "App Notifications")
+val appName = prepmateProp("app.name", "Prepmate")
+val appId = prepmateProp("app.id", "com.gothwad.prepmate")
+val appVersionCode = prepmateProp("app.versionCode", "1").toIntOrNull() ?: 1
+val appVersionName = prepmateProp("app.versionName", "1.0.0")
+val jsBridgeName = prepmateProp("app.jsBridgeName", "PrepmateApp")
+val notificationChannelId = prepmateProp("app.notificationChannelId", "prepmate_notifications")
+val notificationChannelName = prepmateProp("app.notificationChannelName", "Prepmate Notifications")
 val notificationChannelDescription =
-  templateProp("app.notificationChannelDescription", "Messages and updates from the app")
-val prefsName = templateProp("app.prefsName", "app_prefs")
+  prepmateProp("app.notificationChannelDescription", "Received updates and important alerts from Prepmate")
+val prefsName = prepmateProp("app.prefsName", "prepmate_prefs")
 
 android {
   namespace = "com.gothwad.prepmate"
@@ -41,7 +41,7 @@ android {
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-    // Kitchen sink of the template config, exposed to Kotlin as BuildConfig.*
+    // Prepmate config exposed to Kotlin as BuildConfig.* (plus the launcher label)
     resValue("string", "app_name", appName)
     buildConfigField("String", "APP_NAME", "\"$appName\"")
     buildConfigField("String", "JS_BRIDGE_NAME", "\"$jsBridgeName\"")

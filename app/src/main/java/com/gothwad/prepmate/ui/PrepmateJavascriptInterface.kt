@@ -7,20 +7,23 @@ import android.widget.Toast
 import com.gothwad.prepmate.BuildConfig
 import java.util.UUID
 
+/**
+ * Native bridge exposed to the Prepmate web app as window.PrepmateApp (see app.jsBridgeName
+ * in gradle.properties). Every method here is callable from the page's JavaScript.
+ */
 class PrepmateJavascriptInterface(
     private val context: Context,
     private val viewModel: PrepmateViewModel
 ) {
     private val tag = "PrepmateJavascriptInterface"
-    // Fallback token handed to the page when Firebase is not configured. Derived from
-    // app.name so a rebrand does not leave the old product name in the payload.
+    // Fallback token handed to the page when Firebase is not configured (derived from app.name).
     private val appToken =
         BuildConfig.APP_NAME.lowercase().replace(" ", "_") + "_app_tok_" +
             UUID.randomUUID().toString().substring(0, 8)
 
     /**
      * Trigger a native Android push/local notification from JavaScript.
-     * JavaScript call: window.<app.jsBridgeName>.postNotification("Group Chat", "Alice sent a photo");
+     * JavaScript call: window.PrepmateApp.postNotification("Mock Test", "Your result is ready");
      */
     @JavascriptInterface
     fun postNotification(title: String, message: String) {
@@ -30,7 +33,7 @@ class PrepmateJavascriptInterface(
 
     /**
      * Allows website to request a push registration token.
-     * JavaScript call: var token = window.<app.jsBridgeName>.getPushToken();
+     * JavaScript call: var token = window.PrepmateApp.getPushToken();
      */
     @JavascriptInterface
     fun getPushToken(): String {
@@ -42,7 +45,7 @@ class PrepmateJavascriptInterface(
 
     /**
      * Check if device is connected to internet.
-     * JavaScript call: var online = window.<app.jsBridgeName>.isDeviceOnline();
+     * JavaScript call: var online = window.PrepmateApp.isDeviceOnline();
      */
     @JavascriptInterface
     fun isDeviceOnline(): Boolean {
@@ -51,7 +54,7 @@ class PrepmateJavascriptInterface(
 
     /**
      * Save an offline draft from the web app client.
-     * JavaScript call: window.<app.jsBridgeName>.saveOfflineDraft("Draft text goes here");
+     * JavaScript call: window.PrepmateApp.saveOfflineDraft("Draft text goes here");
      */
     @JavascriptInterface
     fun saveOfflineDraft(content: String) {
@@ -61,7 +64,7 @@ class PrepmateJavascriptInterface(
 
     /**
      * Show a simple toast message.
-     * JavaScript call: window.<app.jsBridgeName>.showToast("Logged in successfully!");
+     * JavaScript call: window.PrepmateApp.showToast("Logged in successfully!");
      */
     @JavascriptInterface
     fun showToast(message: String) {
@@ -70,7 +73,7 @@ class PrepmateJavascriptInterface(
 
     /**
      * Notify native Android container of a theme change with dark parameter (boolean).
-     * JavaScript call: window.<app.jsBridgeName>.setTheme(true);
+     * JavaScript call: window.PrepmateApp.setTheme(true);
      */
     @JavascriptInterface
     fun setTheme(isDark: Boolean) {
@@ -80,7 +83,7 @@ class PrepmateJavascriptInterface(
 
     /**
      * Notify native Android container of a theme change with theme name (string).
-     * JavaScript call: window.<app.jsBridgeName>.setTheme("dark"); or window.<app.jsBridgeName>.setTheme("light");
+     * JavaScript call: window.PrepmateApp.setTheme("dark"); or window.PrepmateApp.setTheme("light");
      */
     @JavascriptInterface
     fun setTheme(theme: String) {

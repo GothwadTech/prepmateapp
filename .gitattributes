@@ -1,2 +1,8 @@
-# Treat jar archives as binary to prevent line ending corruption during commit/checkout
+# Treat binary assets as binary to prevent line ending corruption during commit/checkout
 *.jar binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.keystore binary
+*.jks binary

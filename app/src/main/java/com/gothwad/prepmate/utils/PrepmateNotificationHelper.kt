@@ -12,10 +12,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.gothwad.prepmate.MainActivity
+import com.gothwad.prepmate.R
 
 object PrepmateNotificationHelper {
-    // Values come from gradle.properties (app.notificationChannel*) via BuildConfig,
-    // so a rebrand does not have to touch this file.
+    // Prepmate notification channel values come from gradle.properties
+    // (app.notificationChannel*) via BuildConfig.
     private val CHANNEL_ID = com.gothwad.prepmate.BuildConfig.NOTIFICATION_CHANNEL_ID
     private val CHANNEL_NAME = com.gothwad.prepmate.BuildConfig.NOTIFICATION_CHANNEL_NAME
     private val CHANNEL_DESC = com.gothwad.prepmate.BuildConfig.NOTIFICATION_CHANNEL_DESCRIPTION
@@ -50,13 +51,12 @@ object PrepmateNotificationHelper {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Using a modern clean design with fallback icon (or system default)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.sym_action_chat) // Built-in system chat icon for maximum compatibility
+            .setSmallIcon(R.drawable.ic_notification) // Prepmate graduation-cap glyph
             .setContentTitle(title)
             .setContentText(message)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
