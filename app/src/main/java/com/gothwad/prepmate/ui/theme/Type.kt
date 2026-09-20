@@ -1,4 +1,4 @@
-package com.gothwad.grixchat.ui.theme
+package com.gothwad.prepmate.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

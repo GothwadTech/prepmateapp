@@ -1,4 +1,4 @@
-package com.gothwad.grixchat
+package com.gothwad.prepmate
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -43,13 +43,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.gothwad.grixchat.data.GrixDatabase
-import com.gothwad.grixchat.data.GrixRepository
-import com.gothwad.grixchat.ui.GrixViewModel
-import com.gothwad.grixchat.ui.GrixViewModelFactory
-import com.gothwad.grixchat.ui.GrixJavascriptInterface
-import com.gothwad.grixchat.ui.theme.MyApplicationTheme
-import com.gothwad.grixchat.utils.GrixNotificationHelper
+import com.gothwad.prepmate.data.PrepmateDatabase
+import com.gothwad.prepmate.data.PrepmateRepository
+import com.gothwad.prepmate.ui.PrepmateViewModel
+import com.gothwad.prepmate.ui.PrepmateViewModelFactory
+import com.gothwad.prepmate.ui.PrepmateJavascriptInterface
+import com.gothwad.prepmate.ui.theme.MyApplicationTheme
+import com.gothwad.prepmate.utils.PrepmateNotificationHelper
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,11 +82,11 @@ class MainActivity : ComponentActivity() {
         }
 
         // Create the notification channels on launch
-        GrixNotificationHelper.createNotificationChannel(applicationContext)
+        PrepmateNotificationHelper.createNotificationChannel(applicationContext)
 
         // Setup repository
-        val database = GrixDatabase.getDatabase(applicationContext)
-        val repository = GrixRepository(database.grixDao())
+        val database = PrepmateDatabase.getDatabase(applicationContext)
+        val repository = PrepmateRepository(database.prepmateDao())
 
         // Fetch the FCM registration token on launch — but ONLY if Firebase is really configured.
         // Previously this block fabricated a placeholder FirebaseApp ("placeholder-api-key-to-allow-init")
@@ -117,11 +117,11 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            val grixViewModel: GrixViewModel = viewModel(
-                factory = GrixViewModelFactory(application, repository)
+            val prepmateViewModel: PrepmateViewModel = viewModel(
+                factory = PrepmateViewModelFactory(application, repository)
             )
 
-            val isDarkThemeOverride by grixViewModel.isDarkThemeOverride.collectAsStateWithLifecycle()
+            val isDarkThemeOverride by prepmateViewModel.isDarkThemeOverride.collectAsStateWithLifecycle()
             val systemIsDark = isSystemInDarkTheme()
             val useDarkTheme = isDarkThemeOverride ?: systemIsDark
 
@@ -130,7 +130,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GrixChatScreen(viewModel = grixViewModel, isDarkTheme = useDarkTheme)
+                    PrepmateScreen(viewModel = prepmateViewModel, isDarkTheme = useDarkTheme)
                 }
             }
         }
@@ -139,7 +139,7 @@ class MainActivity : ComponentActivity() {
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun GrixChatScreen(viewModel: GrixViewModel, isDarkTheme: Boolean) {
+fun PrepmateScreen(viewModel: PrepmateViewModel, isDarkTheme: Boolean) {
     val context = LocalContext.current
     val isOnline by viewModel.isOnline.collectAsStateWithLifecycle()
     val isError by viewModel.isWebViewError.collectAsStateWithLifecycle()
@@ -555,7 +555,7 @@ fun GrixChatScreen(viewModel: GrixViewModel, isDarkTheme: Boolean) {
                                 // The bridge name is configurable (app.jsBridgeName) so the web app and
                                 // the container cannot drift apart.
                                 addJavascriptInterface(
-                                    GrixJavascriptInterface(ctx, viewModel),
+                                    PrepmateJavascriptInterface(ctx, viewModel),
                                     BuildConfig.JS_BRIDGE_NAME
                                 )
 
@@ -613,7 +613,7 @@ fun GrixChatScreen(viewModel: GrixViewModel, isDarkTheme: Boolean) {
                         },
                         modifier = Modifier
                             .fillMaxSize()
-                            .testTag("grix_webview_panel")
+                            .testTag("prepmate_webview_panel")
                     )
 
                     // Tear the WebView down when this screen really goes away.

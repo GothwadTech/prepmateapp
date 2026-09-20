@@ -1,4 +1,4 @@
-package com.gothwad.grixchat.ui.theme
+package com.gothwad.prepmate.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -16,29 +16,29 @@ import androidx.core.view.WindowCompat
 import android.app.Activity
 
 private val DarkColorScheme = darkColorScheme(
-    primary = GrixPrimary,
-    secondary = GrixSecondary,
-    tertiary = GrixAccent,
-    background = GrixDarkBackground,
-    surface = GrixSurfaceDark,
-    surfaceVariant = GrixSurfaceCard,
-    onPrimary = GrixDarkBackground,
-    onSecondary = GrixDarkBackground,
-    onBackground = GrixLightBackground,
-    onSurface = GrixLightBackground
+    primary = PrepmatePrimary,
+    secondary = PrepmateSecondary,
+    tertiary = PrepmateAccent,
+    background = PrepmateDarkBackground,
+    surface = PrepmateSurfaceDark,
+    surfaceVariant = PrepmateSurfaceCard,
+    onPrimary = PrepmateDarkBackground,
+    onSecondary = PrepmateDarkBackground,
+    onBackground = PrepmateLightBackground,
+    onSurface = PrepmateLightBackground
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = GrixPrimaryLight,
-    secondary = GrixSecondaryLight,
-    tertiary = GrixAccent,
-    background = GrixLightBackground,
-    surface = GrixSurfaceLight,
-    surfaceVariant = GrixSurfaceCardLight,
-    onPrimary = GrixSurfaceLight,
-    onSecondary = GrixSurfaceLight,
-    onBackground = GrixDarkBackground,
-    onSurface = GrixDarkBackground
+    primary = PrepmatePrimaryLight,
+    secondary = PrepmateSecondaryLight,
+    tertiary = PrepmateAccent,
+    background = PrepmateLightBackground,
+    surface = PrepmateSurfaceLight,
+    surfaceVariant = PrepmateSurfaceCardLight,
+    onPrimary = PrepmateSurfaceLight,
+    onSecondary = PrepmateSurfaceLight,
+    onBackground = PrepmateDarkBackground,
+    onSurface = PrepmateDarkBackground
 )
 
 @Composable

@@ -1,4 +1,4 @@
-package com.gothwad.grixchat
+package com.gothwad.prepmate
 
 import org.junit.Assert.*
 import org.junit.Test
